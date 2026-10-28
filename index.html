@@ -1,0 +1,479 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bill Printer · Workspace</title>
+<style>
+:root{--bg:#f5f7fb;--panel:#fff;--ink:#17243b;--muted:#718096;--border:#e6eaf1;--primary:#2563eb;--light:#eff5ff;--shadow:0 8px 32px rgba(28,48,88,.045)}
+*{box-sizing:border-box}html,body{margin:0;min-width:0}body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,'Segoe UI',Arial,sans-serif;background:var(--bg);color:var(--ink)}button,input,textarea{font:inherit}button{cursor:pointer;transition:background .15s,border-color .15s}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #a9c8ff;outline-offset:2px}
+.shell{min-height:100vh;display:grid;grid-template-columns:242px minmax(0,1fr)}.sidebar{background:#fff;border-right:1px solid var(--border);padding:25px 15px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:25px}.brand{display:flex;align-items:center;gap:11px;padding:0 9px}.brand-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:var(--primary);color:#fff;font-weight:800;font-size:19px}.brand strong{display:block;font-size:17px;letter-spacing:-.5px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:2px}.nav{display:grid;gap:5px}.nav button{display:flex;align-items:center;gap:13px;border:0;background:transparent;border-radius:11px;padding:13px 14px;color:#66758d;text-align:left;font-weight:650;font-size:14px}.nav button.active{color:var(--primary);background:var(--light)}.nav .ico{font-size:19px;width:23px;text-align:center}.side-foot{margin-top:auto;padding:14px;border:1px solid var(--border);border-radius:12px;font-size:12px;color:var(--muted)}#status{border:0;border-radius:99px;padding:7px 10px;font-size:12px;background:#e8f8ee;color:#187647;font-weight:700;max-width:100%;white-space:normal}#status.warn{background:#fff3dc;color:#a35b08}#status.off{background:#eef1f5;color:#69788c}
+.main{min-width:0;padding:28px clamp(16px,4vw,56px) 70px}.head{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:25px}.eyebrow{font-size:12px;color:var(--primary);font-weight:750;letter-spacing:.1em;text-transform:uppercase}.head h1{font-size:clamp(23px,2.7vw,32px);letter-spacing:-1.2px;margin:4px 0 0}.head p{color:var(--muted);font-size:13px;margin:5px 0 0}.head-right{display:flex;align-items:center;gap:10px}.panel{display:none;max-width:1120px}.panel.active{display:block}.card{background:var(--panel);border:1px solid var(--border);border-radius:17px;padding:clamp(16px,2.5vw,28px);margin-bottom:17px;box-shadow:var(--shadow)}.card h2{font-size:17px;letter-spacing:-.4px;margin:0 0 19px}.card .sub{color:var(--muted);font-size:13px;margin:-12px 0 20px}.r2{display:grid;grid-template-columns:minmax(0,1fr) minmax(160px,230px);gap:15px;margin-bottom:18px}label{display:block;font-size:12px;font-weight:700;color:#56657b;margin-bottom:7px}label input,label textarea{margin-top:7px}input,textarea{width:100%;min-width:0;border:1px solid #dce3ed;background:#fff;border-radius:10px;padding:12px 13px;color:var(--ink);font-size:15px}input:focus,textarea:focus{border-color:#75a5ff;outline:none;box-shadow:0 0 0 3px #eaf2ff}textarea{resize:vertical}.row-head,.row{display:grid;grid-template-columns:34px minmax(130px,1fr) minmax(70px,100px) minmax(80px,110px) minmax(85px,110px) 35px;gap:9px;align-items:center}.row-head{color:#718096;font-size:11px;text-transform:uppercase;font-weight:750;letter-spacing:.05em;margin:12px 0 8px;padding:0 4px}.row{margin-bottom:9px}.row input{padding:11px 10px;font-size:14px}.row .sn{color:#8896a9;text-align:center;font-size:12px}.row .tl{text-align:right;font-size:13px;font-weight:700;overflow-wrap:anywhere}.row .x{border:0;background:#fff1f2;color:#e04d63;border-radius:9px;width:33px;height:39px;font-size:20px}.row .x:hover{background:#ffe1e5}.sum{background:#eff5ff;border-radius:11px;padding:15px 17px;color:#164aab;font-size:14px;font-weight:750;margin:16px 0}.btns{display:flex;gap:10px;flex-wrap:wrap;margin-top:15px}button:not(.nav button):not(#status):not(.x){border:1px solid #dce3ed;background:#fff;border-radius:10px;padding:11px 17px;color:#42526b;font-weight:700;font-size:13px}button.pri:not(.nav button){background:var(--primary);color:#fff;border-color:var(--primary)}button.pri:hover{background:#1c50c7}button.sm{padding:8px 11px!important;font-size:12px!important}.note{color:var(--muted);font-size:12px;line-height:1.6}.slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.slot{border:1px dashed #cad6e5;background:#fafcff;border-radius:11px;padding:15px;min-height:68px;display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13px;overflow-wrap:anywhere}.slot.empty{color:#9aa8ba}.hb{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:14px 2px;border-bottom:1px solid var(--border);font-size:13px}.hb>span:first-child{overflow-wrap:anywhere}.hb .btn-grp{display:flex;gap:5px;flex-wrap:wrap}details{margin-bottom:9px}summary{cursor:pointer;padding:13px 0;font-weight:750;font-size:14px}.pend{color:#c2760c;font-size:11px}.print-preview{overflow:hidden;max-width:100%}#sheetWrap{overflow:hidden;margin:0 auto}.sheet{width:210mm;height:296mm;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;background:#fff;transform-origin:top left}.q{padding:6mm;border:.3mm dashed #bbb;overflow:hidden;height:148mm;width:105mm}.preview-title{font-size:13px;color:var(--muted);margin:0 0 14px}#viewer{position:fixed;inset:0;background:rgba(15,26,48,.65);display:none;align-items:flex-start;justify-content:center;overflow:auto;z-index:30;padding:15px}#viewer .vbox{background:#fff;border-radius:15px;padding:14px;max-width:100%}#vwrap{overflow:hidden;margin:0 auto;border:1px dashed #bbb}#vq{width:105mm;height:148mm;padding:6mm;background:#fff;transform-origin:top left}#toast{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1d2d49;color:#fff;padding:13px 19px;border-radius:11px;font-size:13px;display:none;z-index:40;max-width:90vw}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:17px}.stat{padding:21px;border-radius:15px;background:#fff;border:1px solid var(--border)}.stat strong{display:block;font-size:27px;letter-spacing:-1px;margin-top:7px}.stat span{color:var(--muted);font-size:12px}.quick{display:flex;gap:10px;flex-wrap:wrap}.quick button{min-width:140px}.mobile-nav{display:none}.setting-details{margin:0}.setting-details>summary{display:none}
+@media(max-width:950px){.shell{grid-template-columns:76px minmax(0,1fr)}.sidebar{padding:22px 9px}.brand{justify-content:center;padding:0}.brand-text,.nav .txt,.side-foot{display:none}.nav button{justify-content:center;padding:13px 7px}.nav .ico{font-size:22px}.main{padding:24px 20px 65px}}
+@media(max-width:650px){.shell{display:block}.sidebar{display:none}.main{padding:18px 13px 98px}.head{margin-bottom:17px}.head h1{font-size:25px}.head p{font-size:12px}.card{border-radius:14px;padding:17px 14px}.r2{grid-template-columns:minmax(0,1fr) minmax(125px,42%);gap:10px}.row-head{display:none}.row{grid-template-columns:25px minmax(0,1fr) minmax(0,1fr) 32px;gap:7px;padding:11px 8px;border:1px solid var(--border);border-radius:12px;background:#fff}.row .sn{grid-column:1;grid-row:1;font-weight:750}.row .it{grid-column:2/4;grid-row:1}.row .x{grid-column:4;grid-row:1}.row .qt{grid-column:2;grid-row:2}.row .rt{grid-column:3;grid-row:2}.row .tl{grid-column:2/4;grid-row:3;text-align:right;padding:2px 5px}.row .tl:not(:empty):before{content:'Amount  ';font-weight:500;color:#8896a9}.row input{font-size:16px;padding:11px 10px}.grid2{grid-template-columns:1fr 1fr;gap:9px}.stat{padding:16px}.stat strong{font-size:23px}.slots{gap:8px}.slot{padding:10px;font-size:12px}.hb{display:block}.hb .btn-grp{margin-top:9px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}.hb .btn-grp button{padding:9px 3px!important}.mobile-nav{position:fixed;display:grid;grid-template-columns:repeat(5,1fr);bottom:0;left:0;right:0;z-index:20;background:#fff;border-top:1px solid var(--border);padding:8px 4px max(8px,env(safe-area-inset-bottom))}.mobile-nav button{border:0!important;background:transparent!important;padding:6px 1px!important;font-size:10px!important;color:#7b899d!important;display:flex;flex-direction:column;align-items:center;gap:3px}.mobile-nav button.active{color:var(--primary)!important}.mobile-nav .ico{font-size:19px}.btns button{flex:1}.quick button{flex:1}.setting-details>summary{display:block}}
+@media(max-width:360px){.r2{grid-template-columns:1fr}.row{grid-template-columns:22px minmax(0,1fr) minmax(0,1fr) 30px}.slots{grid-template-columns:1fr}}
+@media print{@page{size:A4;margin:0}html,body{margin:0!important;background:#fff!important}.shell,.mobile-nav,#viewer,#toast,.no-print{display:none!important}#printSurface{display:block!important;position:absolute;left:0;top:0;width:210mm;height:296mm;margin:0!important;padding:0!important;border:0!important;box-shadow:none!important;background:#fff!important}#sheetWrap{width:210mm!important;height:296mm!important;margin:0!important;overflow:visible!important}.sheet{transform:none!important}.q{border-color:#ccc}}
+</style></head><body>
+<div class="shell no-print"><aside class="sidebar"><div class="brand"><div class="brand-icon">B</div><div class="brand-text"><strong>Bill Printer</strong><small>Simple billing workspace</small></div></div><nav class="nav" id="desktopNav">
+<button data-page="home" class="active"><span class="ico">▦</span><span class="txt">Overview</span></button><button data-page="create"><span class="ico">✎</span><span class="txt">Create bill</span></button><button data-page="saved"><span class="ico">▤</span><span class="txt">Saved bills</span></button><button data-page="print"><span class="ico">▧</span><span class="txt">Print sheet</span></button><button data-page="settings"><span class="ico">⚙</span><span class="txt">Settings</span></button></nav><div class="side-foot">Cloud sync<br><br><span id="sidebarStatusHint">Your bills stay available on this device.</span></div></aside>
+<main class="main"><header class="head"><div><div class="eyebrow">Workspace</div><h1 id="pageTitle">Overview</h1><p id="pageSubtitle">Everything you need to manage your bills.</p></div><div class="head-right"><button id="status" title="Tap to sync now">…</button></div></header>
+<section class="panel active" data-panel="home"><div class="grid2" style="margin-bottom:17px"><div class="stat"><span>Total saved bills</span><strong id="statBills">0</strong></div><div class="stat"><span>Bills on print sheet</span><strong id="statSheet">0 / 4</strong></div></div><div class="card"><h2>Quick actions</h2><p class="sub">Choose what you want to do.</p><div class="quick"><button class="pri" data-goto="create">＋ Create new bill</button><button data-goto="saved">▤ View saved bills</button><button data-goto="print">▧ Print A4 sheet</button></div></div><div class="card"><h2>Designed for your workflow</h2><p class="note">Create bills, reuse parties and item rates, save to Google Drive, and print up to four bills on one A4 sheet. The print layout remains the same on phones and computers.</p></div></section>
+<section class="panel" data-panel="create"><div class="card"><h2 id="formTitle">New bill</h2><div class="r2"><label>Party name<input id="party" list="parties" autocomplete="off" placeholder="Enter party name"></label><label>Date<input id="date" type="date"></label><label style="grid-column:1/-1">Second line (optional)<input id="party2" autocomplete="off" placeholder="Location or additional details"></label></div><div class="row-head"><span>#</span><span>Item</span><span>Qty</span><span>Rate (₹)</span><span style="text-align:right">Amount (₹)</span><span></span></div><div id="rows"></div><div class="sum" id="sum"></div><div class="btns"><button id="saveBtn" class="pri">Save bill</button><button id="clearBtn">Clear form</button></div></div></section>
+<section class="panel" data-panel="saved"><div class="card"><h2>Saved bills</h2><p class="sub">Organized by date. Add any saved bill to your print sheet.</p><div id="history"></div></div></section>
+<section class="panel" data-panel="print"><div class="card"><h2>Print sheet</h2><p class="sub">Select up to 4 saved bills. Each bill uses exactly one quarter of A4.</p><div class="slots" id="slots"></div><div class="btns"><button id="printBtn" class="pri">Print sheet</button><button id="clearSheet">Clear sheet</button></div></div><div class="card print-preview"><h2>A4 preview</h2><p class="sub">Preview scales to your screen; actual print size stays unchanged.</p><div id="previewPlaceholder" style="display:none"></div></div></section>
+<section class="panel" data-panel="settings"><div class="card"><h2>Google Drive sync</h2><details class="setting-details" id="settings" open><summary>Connection details</summary><label>Web app URL<input id="cfgUrl" placeholder="Google Apps Script deployment URL" autocomplete="off"></label><label>Secret key<input id="cfgKey" type="password" autocomplete="off"></label><label>Firm name on bill<input id="cfgFirm" autocomplete="off" placeholder="SKT"></label><div class="btns"><button id="cfgSave" class="pri sm">Save &amp; sync</button><button id="cfgRewrite" class="sm">Rewrite all Drive files</button></div><p class="note">Use the same URL and key on each device. Bills are saved to Drive under date folders.</p></details></div><div class="card"><h2>Parties &amp; items</h2><details class="setting-details" id="masters" open><summary>Edit autofill lists</summary><label>Parties — one per line<textarea id="mParties" rows="6" placeholder="Krishna&#10;Gurukripa"></textarea></label><label>Items — one per line; optional default rate after comma<textarea id="mItems" rows="8" placeholder="Soyabin, 250&#10;Groundnut, 250&#10;Mustard"></textarea></label><div class="btns"><button id="mSave" class="pri sm">Save lists</button><button id="mFromBills" class="sm">Add names from saved bills</button></div><p class="note">You can paste names and rates from Excel or Sheets.</p></details></div></section>
+</main></div>
+<nav class="mobile-nav no-print" id="mobileNav"><button data-page="home" class="active"><span class="ico">▦</span>Home</button><button data-page="create"><span class="ico">✎</span>New bill</button><button data-page="saved"><span class="ico">▤</span>Saved</button><button data-page="print"><span class="ico">▧</span>Print</button><button data-page="settings"><span class="ico">⚙</span>Settings</button></nav>
+<div id="printSurface" style="display:none"><div id="sheetWrap"><div class="sheet" id="sheet"></div></div></div>
+<datalist id="parties"></datalist><datalist id="items"></datalist><div id="viewer" class="no-print"><div class="vbox"><div id="vwrap"><div id="vq"></div></div><div class="btns" id="vbtns"></div></div></div><div id="toast" class="no-print"></div>
+<script>
+const BILL_CSS=`
+.bill{font-family:Arial,Helvetica,sans-serif;-webkit-text-size-adjust:none;text-size-adjust:none;color:#000;width:100%;height:100%;display:flex;flex-direction:column;border:1.2px solid #000;box-sizing:border-box}
+.bh{flex:none;min-height:10mm;display:flex;justify-content:space-between;align-items:center;gap:3mm;padding:1mm 2.5mm;border-bottom:1.2px solid #000}
+.bh .party{font-size:15px;font-weight:700;line-height:1.15;word-break:break-word}
+.bh .party small{display:block;font-size:10.5px;font-weight:400;line-height:1.2;margin-top:.4mm}
+.bh .date{font-size:12px;font-weight:600;white-space:nowrap}
+.bb{flex:none;height:12mm;display:flex;align-items:center;justify-content:center;padding:0 2.5mm;border-bottom:1.2px solid #000;overflow:hidden}
+.bb:before,.bb:after{content:"";flex:1;border-top:3px double #000;min-width:4mm}
+.bb span{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-weight:700;line-height:1;white-space:nowrap;margin:0 3mm;overflow:hidden;text-overflow:ellipsis;max-width:75%}
+.bt{flex:1;min-height:0;display:grid;grid-template-rows:7mm repeat(18,minmax(0,1fr)) 8mm}
+.bt .r{display:grid;grid-template-columns:7mm 1fr 11mm 13mm 17mm;border-bottom:1px solid #000;min-height:0}
+.bt .r:nth-last-child(2){border-bottom:0}
+.bt .r.e{border-bottom:0}
+.bt .r:last-child{border-bottom:0;border-top:1.5px solid #000}
+.bt .c{display:flex;align-items:center;padding:0 1.2mm;border-right:1px solid #000;font-size:10px;line-height:1.1;overflow:hidden;min-width:0;word-break:break-word}
+.bt .c:last-child{border-right:0}
+.bt .c.n{justify-content:flex-end;text-align:right;white-space:nowrap}
+.bt .c.s{justify-content:center;padding:0}
+.bt .h .c{background:#eee;font-weight:700;white-space:nowrap}
+.bt .tr .c{font-weight:700;font-size:11px}
+`;
+const st=document.createElement('style');st.textContent=BILL_CSS;document.head.appendChild(st);
+
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const MAX=18;
+const num=v=>{const n=parseFloat(v);return isNaN(n)?0:n};
+const r2=n=>Math.round(n*100)/100;
+const fmt=n=>{n=r2(n);return Number.isInteger(n)?String(n):n.toFixed(2)};
+const pad=n=>String(n).padStart(2,'0');
+const today=()=>{const d=new Date();return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate())};
+const dmy=iso=>iso.split('-').reverse().join('-');
+const safe=s=>s.replace(/[^\w\-]+/g,'_').slice(0,40)||'bill';
+
+function load(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
+function persist(){try{
+  localStorage.setItem('bills',JSON.stringify(bills));
+  localStorage.setItem('sheet',JSON.stringify(sheetIds));
+  localStorage.setItem('dels',JSON.stringify(dels));
+  localStorage.setItem('masters',JSON.stringify(masters));
+}catch(e){}}
+let bills=load('bills',[]);
+let sheetIds=load('sheet',[]);
+let dels=load('dels',[]);
+let masters=load('masters',{parties:[],items:[],updated:0,dirty:false});
+let cfg=load('cfg',{url:'',key:''});
+let rows=[{item:'',qty:'',rate:''}];
+let editingId=null;
+let rateMap={};
+let lastSync=null,syncing=false,lastError='';
+const isDirty=b=>b.dirty!==false;       // never confirmed on Drive yet
+const pendingCount=()=>bills.filter(isDirty).length+dels.length;
+
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.t);toast.t=setTimeout(()=>t.style.display='none',3200)}
+
+/* ---------- Bill rendering ---------- */
+let firm=(function(){try{return localStorage.getItem('firm')||'SKT'}catch(e){return 'SKT'}})();
+function brandHtml(){
+  const n=firm.length,size=n<=5?26:n<=10?19:14,sp=n<=5?'.3em':'.1em';
+  return `<div class="bb"><span style="font-size:${size}px;letter-spacing:${sp};padding-left:${sp}">${esc(firm)}</span></div>`;
+}
+function partyHtml(b){
+  const pp=b.party.split('\n');
+  return `<div class="party">${esc(pp[0])}${pp.length>1?`<small>${esc(pp.slice(1).join(' '))}</small>`:''}</div>`;
+}
+function totals(items){
+  let qty=0,amt=0;
+  items.forEach(i=>{qty+=num(i.qty);amt+=r2(num(i.qty)*num(i.rate))});
+  return {count:items.length,qty:r2(qty),amt:Math.round(amt)};
+}
+function billHtml(b){
+  const t=totals(b.items);
+  let body='';
+  for(let n=0;n<MAX;n++){
+    const i=b.items[n];
+    body+=i
+      ?`<div class="r"><div class="c s">${n+1}</div><div class="c">${esc(i.item)}</div><div class="c n">${fmt(i.qty)}</div><div class="c n">${fmt(i.rate)}</div><div class="c n">${fmt(r2(i.qty*i.rate))}</div></div>`
+      :`<div class="r e"><div class="c s"></div><div class="c"></div><div class="c n"></div><div class="c n"></div><div class="c n"></div></div>`;
+  }
+  return `<div class="bill">${brandHtml()}<div class="bh">${partyHtml(b)}<div class="date">${dmy(b.date)}</div></div>
+<div class="bt"><div class="r h"><div class="c s">S.no</div><div class="c">Item</div><div class="c n">Qty</div><div class="c n">Rate</div><div class="c n">Total</div></div>${body}<div class="r tr"><div class="c"></div><div class="c">Total items: ${t.count}</div><div class="c n">${fmt(t.qty)}</div><div class="c n"></div><div class="c n">${fmt(t.amt)}</div></div></div></div>`;
+}
+function billFileHtml(b){
+  return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(b.party)} ${dmy(b.date)}</title><style>@page{size:A4;margin:10mm}body{margin:0}.w{width:105mm;height:148mm;padding:6mm;box-sizing:border-box}${BILL_CSS}</style></head><body><div class="w">${billHtml(b)}</div></body></html>`;
+}
+
+/* ---------- Form ---------- */
+function validRows(){return rows.filter(r=>r.item.trim()||num(r.qty))}
+function rowTotal(r){return r2(num(r.qty)*num(r.rate))}
+const rowFilled=r=>!!(r.item.trim()||String(r.qty)!==''||String(r.rate)!=='');
+function rowHtml(r,i){
+  return `<div class="row" data-i="${i}"><span class="sn">${i+1}</span>
+<input class="it" list="items" autocomplete="off" placeholder="Item" value="${esc(r.item)}">
+<input class="qt" type="number" inputmode="decimal" step="any" placeholder="Qty" value="${esc(r.qty)}">
+<input class="rt" type="number" inputmode="decimal" step="any" placeholder="Rate" value="${esc(r.rate)}">
+<span class="tl">${rowTotal(r)?fmt(rowTotal(r)):''}</span><button class="x" tabindex="-1">×</button></div>`;
+}
+function renderRows(){
+  // always keep one empty row at the end
+  if(rows.length<MAX&&rowFilled(rows[rows.length-1]))rows.push({item:'',qty:'',rate:''});
+  $('#rows').innerHTML=rows.map((r,i)=>rowHtml(r,i)).join('');
+  updateSum();
+}
+function addRow(){
+  rows.push({item:'',qty:'',rate:''});
+  $('#rows').insertAdjacentHTML('beforeend',rowHtml(rows[rows.length-1],rows.length-1));
+}
+function updateSum(){
+  const t=totals(validRows().map(r=>({qty:num(r.qty),rate:num(r.rate),item:r.item})));
+  $('#sum').innerHTML=`Items: ${t.count}/${MAX} &nbsp;·&nbsp; Qty: ${fmt(t.qty)} &nbsp;·&nbsp; Total: ${fmt(t.amt)}`;
+}
+function focusRow(i,cls){const el=document.querySelector(`.row[data-i="${i}"] .${cls}`);if(el)el.focus()}
+
+$('#rows').addEventListener('input',e=>{
+  const row=e.target.closest('.row');if(!row)return;
+  const r=rows[+row.dataset.i];
+  if(e.target.classList.contains('it'))r.item=e.target.value;
+  if(e.target.classList.contains('qt'))r.qty=e.target.value;
+  if(e.target.classList.contains('rt'))r.rate=e.target.value;
+  row.querySelector('.tl').textContent=rowTotal(r)?fmt(rowTotal(r)):'';
+  updateSum();
+  if(+row.dataset.i===rows.length-1&&rows.length<MAX&&rowFilled(r))addRow();
+});
+$('#rows').addEventListener('change',e=>{
+  if(!e.target.classList.contains('it'))return;
+  const row=e.target.closest('.row'),r=rows[+row.dataset.i];
+  const key=r.item.trim().toLowerCase();
+  if(key&&rateMap[key]!==undefined&&!r.rate){
+    r.rate=String(rateMap[key]);row.querySelector('.rt').value=r.rate;
+    row.querySelector('.tl').textContent=rowTotal(r)?fmt(rowTotal(r)):'';updateSum();
+  }
+});
+$('#rows').addEventListener('click',e=>{
+  if(!e.target.classList.contains('x'))return;
+  const i=+e.target.closest('.row').dataset.i;
+  if(rows.length===1)rows=[{item:'',qty:'',rate:''}];else rows.splice(i,1);
+  renderRows();
+});
+$('#rows').addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  e.preventDefault();
+  const row=e.target.closest('.row');if(!row)return;
+  const i=+row.dataset.i;
+  if(e.target.classList.contains('it'))focusRow(i,'qt');
+  else if(e.target.classList.contains('qt'))focusRow(i,'rt');
+  else if(e.target.classList.contains('rt')){
+    if(i===rows.length-1&&rows.length<MAX)addRow();
+    if(i+1<rows.length)focusRow(i+1,'it');
+  }
+});
+$('#clearBtn').onclick=resetForm;
+/* party name + permanent second line below it */
+let line2Map={};
+$('#party').addEventListener('change',()=>{
+  const l2=$('#party2'),k=$('#party').value.trim().toLowerCase();
+  if(!l2.value.trim()&&line2Map[k])l2.value=line2Map[k];
+});
+$('#party').addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  e.preventDefault();$('#party2').focus();   // Enter = next line, even if empty
+});
+$('#party2').addEventListener('keydown',e=>{
+  if(e.key!=='Enter')return;
+  e.preventDefault();focusRow(0,'it');
+});
+function resetForm(){
+  editingId=null;rows=[{item:'',qty:'',rate:''}];
+  $('#party').value='';$('#party2').value='';$('#formTitle').textContent='New bill';
+  renderRows();
+}
+
+/* ---------- Save (always local first) ---------- */
+function saveBill(){
+  const party=[$('#party').value.trim(),$('#party2').value.trim()].filter(Boolean).join('\n');
+  const date=$('#date').value||today();
+  const items=validRows().map(r=>({item:r.item.trim(),qty:num(r.qty),rate:num(r.rate)}));
+  if(!$('#party').value.trim())return toast('Enter party name');
+  if(!items.length)return toast('Add at least one item');
+  if(items.length>MAX)return toast(`Max ${MAX} items fit in one quarter`);
+  const now=Date.now();
+  let b;
+  if(editingId){
+    b=bills.find(x=>x.id===editingId);
+    if(b.date!==date||b.party!==party)b.file=null;
+    Object.assign(b,{party,date,items});
+  }else{
+    b={id:now.toString(36)+Math.random().toString(36).slice(2,6),party,date,items,created:now};
+    bills.push(b);
+  }
+  b.updated=now;b.dirty=true;
+  if(!b.file){const n=new Date(b.created);b.file=pad(n.getHours())+pad(n.getMinutes())+pad(n.getSeconds())+'_'+safe(party)+'_'+b.id.slice(-4)+'.html'}
+  let msg=navigator.onLine&&cfg.url?'Saved, syncing to Drive':'Saved on device, will sync when online';
+  persist();resetForm();refresh();toast(msg);
+  sync();
+}
+$('#saveBtn').onclick=saveBill;
+
+/* ---------- Drive sync ---------- */
+function setStatus(){
+  const s=$('#status'),n=pendingCount();
+  s.className='';
+  if(!cfg.url||!cfg.key){s.textContent='Drive not set up';s.className='off';return}
+  if(syncing){s.textContent='Syncing…';s.className='off';return}
+  if(!navigator.onLine){s.textContent='Offline'+(n?` · ${n} pending`:'');s.className='warn';return}
+  if(lastError){s.textContent='Sync failed'+(n?` · ${n} pending`:'');s.className='warn';s.title=lastError;return}
+  if(n){s.textContent=`${n} pending`;s.className='warn';return}
+  s.textContent='Synced'+(lastSync?' '+pad(lastSync.getHours())+':'+pad(lastSync.getMinutes()):'');
+}
+async function sync(manual){
+  if(!cfg.url||!cfg.key){if(manual)toast('Enter Drive URL and key in setup');setStatus();return}
+  if(syncing)return;
+  if(!navigator.onLine){if(manual)toast('Offline, will sync when online');setStatus();return}
+  syncing=true;lastError='';setStatus();
+  try{
+    const send=bills.filter(isDirty);
+    const sentUpd={};send.forEach(b=>sentUpd[b.id]=b.updated);
+    const sendDels=dels.slice();
+    const wasM=masters.dirty,sentM=masters.updated;
+    const body={key:cfg.key,deletes:sendDels,masters:masters.dirty?{parties:masters.parties,items:masters.items,updated:masters.updated}:undefined,bills:send.map(b=>{const {dirty,...clean}=b;return {bill:clean,html:billFileHtml(b)}})};
+    const res=await fetch(cfg.url,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(body)});
+    const j=await res.json();
+    if(!j.ok)throw new Error(j.error||'Server error');
+
+    send.forEach(b=>{if(b.updated===sentUpd[b.id])b.dirty=false});
+    dels=dels.filter(id=>!sendDels.includes(id));
+    if(wasM&&masters.updated===sentM)masters.dirty=false;
+    if(j.masters&&!masters.dirty&&(j.masters.updated||0)>(masters.updated||0)){
+      masters={parties:j.masters.parties||[],items:j.masters.items||[],updated:j.masters.updated,dirty:false};
+      renderMasters();
+    }
+
+    const remote=new Set(j.bills.map(b=>b.id));
+    j.bills.forEach(rb=>{
+      if(dels.includes(rb.id))return;
+      const l=bills.find(x=>x.id===rb.id);
+      if(!l)bills.push({...rb,dirty:false});
+      else if(!isDirty(l)&&rb.updated>l.updated)Object.assign(l,rb,{dirty:false});
+    });
+    bills=bills.filter(b=>isDirty(b)||remote.has(b.id));   // drop ones deleted on another device
+    lastSync=new Date();
+    pruneLocal()
+    persist();refresh();
+    if(manual)toast('Synced');
+  }catch(e){
+    lastError=String(e.message||e);
+    if(manual)toast('Sync failed: '+lastError);
+  }finally{syncing=false;setStatus()}
+}
+window.addEventListener('online',()=>sync());
+window.addEventListener('offline',setStatus);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)sync()});
+setInterval(()=>sync(),60000);
+$('#status').onclick=()=>sync(true);
+$('#cfgSave').onclick=()=>{
+  cfg={url:$('#cfgUrl').value.trim(),key:$('#cfgKey').value.trim()};
+  firm=$('#cfgFirm').value.trim()||'SKT';
+  try{localStorage.setItem('firm',firm)}catch(e){}
+  renderSheet();
+  try{localStorage.setItem('cfg',JSON.stringify(cfg))}catch(e){}
+  sync(true);
+};
+
+$('#cfgRewrite').onclick=()=>{
+  if(!confirm('Re-upload every bill so the Drive HTML files use the current layout?'))return;
+  const n=Date.now();bills.forEach(b=>{b.updated=n;b.dirty=true});
+  persist();refresh();sync(true);
+};
+
+/* ---------- Sheet ---------- */
+function sheetBills(){return sheetIds.map(id=>bills.find(b=>b.id===id)).filter(Boolean)}
+function renderSheet(){
+  const sb=sheetBills();sheetIds=sb.map(b=>b.id);
+  $('#slots').innerHTML=[0,1,2,3].map(i=>sb[i]
+    ?`<div class="slot"><span><b>${i+1}.</b> ${esc(sb[i].party)}<br><small>${fmt(totals(sb[i].items).amt)}</small></span><button class="sm" data-rm="${i}">×</button></div>`
+    :`<div class="slot empty"><span><b>${i+1}.</b> empty</span></div>`).join('');
+  $('#sheet').innerHTML=[0,1,2,3].map(i=>`<div class="q">${sb[i]?billHtml(sb[i]):''}</div>`).join('');
+  fitSheet();
+}
+function fitSheet(){
+  const avail=$('#printSurface').clientWidth||document.documentElement.clientWidth-16;
+  const z=Math.max(0.25,Math.min(1,avail/794));
+  $('#sheet').style.transform=`scale(${z})`;
+  const w=$('#sheetWrap');w.style.width=(794*z)+'px';w.style.height=(1120*z)+'px';
+}
+window.addEventListener('resize',fitSheet);
+window.addEventListener('orientationchange',()=>setTimeout(fitSheet,250));
+if(window.visualViewport)visualViewport.addEventListener('resize',fitSheet);
+if(window.ResizeObserver)new ResizeObserver(fitSheet).observe(document.documentElement);
+$('#slots').addEventListener('click',e=>{
+  const i=e.target.dataset.rm;if(i===undefined)return;
+  sheetIds.splice(+i,1);persist();renderSheet();
+});
+$('#clearSheet').onclick=()=>{sheetIds=[];persist();renderSheet()};
+$('#printBtn').onclick=()=>{
+  if(!sheetBills().length)return toast('Sheet is empty');
+  window.print();
+};
+
+/* ---------- View a saved bill (read-only) ---------- */
+let viewId=null;
+function openView(id){
+  const b=bills.find(x=>x.id===id);if(!b)return;
+  viewId=id;
+  $('#vq').innerHTML=billHtml(b);
+  const z=Math.min(1,(document.documentElement.clientWidth-56)/397);
+  $('#vq').style.transform=`scale(${z})`;
+  const w=$('#vwrap');w.style.width=(397*z)+'px';w.style.height=(560*z)+'px';
+  const on=sheetIds.includes(id);
+  $('#vbtns').innerHTML=`<button class="pri" data-v="edit">Edit</button><button data-v="sheet" ${on?'disabled':''}>${on?'On sheet':'Add to sheet'}</button><button data-v="dl">Download</button><button data-v="close">Close</button>`;
+  $('#viewer').style.display='flex';
+}
+function closeView(){$('#viewer').style.display='none';viewId=null}
+function editBill(id){
+  const b=bills.find(x=>x.id===id);if(!b)return;
+  editingId=id;const pp=b.party.split('\n');
+  $('#party').value=pp[0];$('#party2').value=pp.slice(1).join(' ');$('#date').value=b.date;
+  rows=b.items.map(i=>({item:i.item,qty:String(i.qty),rate:String(i.rate)}));
+  $('#formTitle').textContent='Editing bill';renderRows();window.scrollTo({top:0,behavior:'smooth'});
+}
+function addToSheet(id){
+  if(sheetIds.includes(id))return toast('Already on sheet');
+  if(sheetIds.length>=4)return toast('Sheet is full');
+  sheetIds.push(id);persist();renderSheet();toast(`Added to quarter ${sheetIds.length}`);
+}
+$('#viewer').addEventListener('click',e=>{
+  if(e.target.id==='viewer'){closeView();return}
+  const v=e.target.dataset.v;if(!v)return;
+  const id=viewId,b=bills.find(x=>x.id===id);
+  if(v==='close')closeView();
+  if(v==='edit'){closeView();editBill(id)}
+  if(v==='sheet'&&b){addToSheet(id);openView(id)}
+  if(v==='dl'&&b){
+    const blob=new Blob([billFileHtml(b)],{type:'text/html'});
+    const l=document.createElement('a');l.href=URL.createObjectURL(blob);
+    l.download=`${b.date}_${safe(b.party)}.html`;l.click();setTimeout(()=>URL.revokeObjectURL(l.href),2000);
+  }
+});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeView()});
+
+/* ---------- History ---------- */
+function renderHistory(){
+  const byDate={};
+  bills.forEach(b=>(byDate[b.date]=byDate[b.date]||[]).push(b));
+  const dates=Object.keys(byDate).sort().reverse();
+  if(!dates.length){$('#history').innerHTML='<p class="note">No saved bills yet.</p>';return}
+  $('#history').innerHTML=dates.map((d,k)=>`<details ${k===0?'open':''}><summary>📁 ${dmy(d)} (${byDate[d].length})</summary>`+
+    byDate[d].slice().sort((a,b)=>b.created-a.created).map(b=>`<div class="hb"><span>${esc(b.party)} · <b>${fmt(totals(b.items).amt)}</b>${isDirty(b)?' <span class="pend">● not on Drive yet</span>':''}</span><span class="btn-grp">
+<button class="sm" data-a="add" data-id="${b.id}">+Sheet</button><button class="sm" data-a="view" data-id="${b.id}">View</button><button class="sm" data-a="dl" data-id="${b.id}">⬇</button><button class="sm" data-a="del" data-id="${b.id}">🗑</button></span></div>`).join('')+`</details>`).join('');
+}
+$('#history').addEventListener('click',e=>{
+  const a=e.target.dataset.a,id=e.target.dataset.id;if(!a)return;
+  const b=bills.find(x=>x.id===id);if(!b)return;
+  if(a==='add'){
+    if(sheetIds.includes(id))return toast('Already on sheet');
+    if(sheetIds.length>=4)return toast('Sheet is full');
+    sheetIds.push(id);persist();renderSheet();toast(`Added to quarter ${sheetIds.length}`);
+  }
+  if(a==='view')openView(id);
+  if(a==='dl'){
+    const blob=new Blob([billFileHtml(b)],{type:'text/html'});
+    const l=document.createElement('a');l.href=URL.createObjectURL(blob);
+    l.download=`${b.date}_${safe(b.party)}.html`;l.click();setTimeout(()=>URL.revokeObjectURL(l.href),2000);
+  }
+  if(a==='del'){
+    if(!confirm('Delete this bill everywhere (also from Drive)?'))return;
+    bills=bills.filter(x=>x.id!==id);sheetIds=sheetIds.filter(x=>x!==id);
+    if(!dels.includes(id))dels.push(id);
+    persist();refresh();sync();
+  }
+});
+
+/* ---------- Autofill lists ---------- */
+function refreshLists(){
+  const parties=new Map(),items=new Map();rateMap={};line2Map={};
+  const add=(m,n)=>{const k=n.replace(/\s*\n\s*/g,' ').toLowerCase();if(n&&!m.has(k))m.set(k,n)};
+  masters.items.forEach(i=>add(items,i.n));
+  bills.slice().sort((a,b)=>a.created-b.created).forEach(b=>{
+    const pp=b.party.split('\n');add(parties,pp[0]);if(pp[1])line2Map[pp[0].toLowerCase()]=pp.slice(1).join(' ');
+    b.items.forEach(i=>{add(items,i.item);rateMap[i.item.toLowerCase()]=i.rate});
+  });
+  masters.parties.forEach(p=>add(parties,p));
+  masters.items.forEach(i=>{if(i.r!=null)rateMap[i.n.toLowerCase()]=i.r});
+  $('#parties').innerHTML=[...parties.values()].sort((a,b)=>a.localeCompare(b)).map(p=>`<option value="${esc(p)}">`).join('');
+  $('#items').innerHTML=[...items.values()].sort((a,b)=>a.localeCompare(b)).map(p=>`<option value="${esc(p)}">`).join('');
+}
+
+/* ---------- Master lists (typed or pasted by you) ---------- */
+function renderMasters(){
+  $('#mParties').value=masters.parties.join('\n');
+  $('#mItems').value=masters.items.map(i=>i.r!=null?`${i.n}, ${i.r}`:i.n).join('\n');
+  refreshLists();
+}
+function parseParties(txt){
+  const seen=new Set(),out=[];
+  txt.split('\n').forEach(l=>{l=l.trim();const k=l.toLowerCase();if(l&&!seen.has(k)){seen.add(k);out.push(l)}});
+  return out;
+}
+function parseItems(txt){
+  const seen=new Set(),out=[];
+  txt.split('\n').forEach(l=>{
+    l=l.trim();if(!l)return;
+    let n=l,r=null;
+    const m=l.match(/^(.*?)\s*[\t,]\s*(\d+(?:\.\d+)?)\s*$/);
+    if(m){n=m[1].trim();r=parseFloat(m[2])}
+    const k=n.toLowerCase();
+    if(!n||seen.has(k))return;
+    seen.add(k);out.push({n,r});
+  });
+  return out;
+}
+function pruneLocal(){
+  const d=new Date();d.setDate(d.getDate()-30);
+  const cut=d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+  bills=bills.filter(b=>b.date>=cut||isDirty(b));
+  sheetIds=sheetIds.filter(id=>bills.some(b=>b.id===id));
+}
+function saveMasters(parties,items,msg){
+  masters={parties,items,updated:Date.now(),dirty:true};
+  persist();renderMasters();toast(msg);sync();
+}
+$('#mSave').onclick=()=>saveMasters(parseParties($('#mParties').value),parseItems($('#mItems').value),`Saved ${parseParties($('#mParties').value).length} parties, ${parseItems($('#mItems').value).length} items`);
+$('#mFromBills').onclick=()=>{
+  const parties=parseParties($('#mParties').value),items=parseItems($('#mItems').value);
+  const pk=new Set(parties.map(p=>p.toLowerCase())),ik=new Set(items.map(i=>i.n.toLowerCase()));
+  bills.slice().sort((a,b)=>a.created-b.created).forEach(b=>{
+    const pf=b.party.split('\n')[0];
+    if(!pk.has(pf.toLowerCase())){pk.add(pf.toLowerCase());parties.push(pf)}
+    b.items.forEach(i=>{const k=i.item.toLowerCase();if(i.item&&!ik.has(k)){ik.add(k);items.push({n:i.item,r:i.rate||null})}});
+  });
+  saveMasters(parties,items,'Added names from saved bills');
+};
+function refresh(){refreshLists();renderSheet();renderHistory();setStatus()}
+
+/* ---------- Init ---------- */
+bills.forEach(b=>{if(!b.updated)b.updated=b.created||Date.now();if(!b.created)b.created=b.updated});
+$('#date').value=today();
+$('#cfgUrl').value=cfg.url;$('#cfgKey').value=cfg.key;$('#cfgFirm').value=firm;
+if(!cfg.url)$('#settings').open=true;
+pruneLocal()
+renderRows();renderMasters();refresh();sync();
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script>
+
+
+<script>
+(function(){
+const titles={home:['Overview','Everything you need to manage your bills.'],create:['Create bill','Enter details and save in seconds.'],saved:['Saved bills','Find, edit, and reuse your previous bills.'],print:['Print sheet','Arrange up to four bills on one A4 page.'],settings:['Settings','Manage sync, business name, and autofill.']};
+function navigate(page){if(!titles[page])return;document.querySelectorAll('[data-panel]').forEach(el=>el.classList.toggle('active',el.dataset.panel===page));document.querySelectorAll('[data-page]').forEach(el=>el.classList.toggle('active',el.dataset.page===page));document.getElementById('pageTitle').textContent=titles[page][0];document.getElementById('pageSubtitle').textContent=titles[page][1];const surface=document.getElementById('printSurface');const target=document.querySelector('[data-panel="print"] .print-preview');if(page==='print'){target.appendChild(surface);surface.style.display='block';setTimeout(()=>{if(typeof fitSheet==='function')fitSheet()},0)}else{surface.style.display='none'}window.scrollTo(0,0);}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-page],[data-goto]');if(b)navigate(b.dataset.page||b.dataset.goto)});
+const originalRefresh=refresh;refresh=function(){originalRefresh();document.getElementById('statBills').textContent=bills.length;document.getElementById('statSheet').textContent=sheetIds.length+' / 4'};
+const originalEdit=editBill;editBill=function(id){navigate('create');originalEdit(id)};
+const originalPrint=window.onbeforeprint;window.addEventListener('beforeprint',()=>{document.body.appendChild(document.getElementById('printSurface'));document.getElementById('printSurface').style.display='block'});window.addEventListener('afterprint',()=>{if(document.querySelector('[data-panel="print"]').classList.contains('active'))navigate('print');else document.getElementById('printSurface').style.display='none'});
+refresh();
+})();
+</script></body></html>
